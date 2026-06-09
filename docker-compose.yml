@@ -42,5 +42,27 @@ services:
       - etcd
       - apisix
 
+  dashboard-local:
+    build:
+       context: ./
+       dockerfile: Dockerfile.local
+    restart: unless-stopped
+    environment:
+      DASHBOARD_NODE_MAX_OLD_SPACE_SIZE: "4096"
+    volumes:
+      - ./:/usr/local/apisix-dashboard
+      - ./etc/dashboard_conf:/usr/local/apisix-dashboard/conf/
+      - dashboard_local_go_mod:/go/pkg/mod
+      - dashboard_local_go_build:/root/.cache/go-build
+      - dashboard_local_node_modules:/usr/local/apisix-dashboard/web/node_modules
+    ports:
+      - "10001:9000"
+    depends_on:
+      - etcd
+      - apisix
+
 volumes:
   etcd_data:
+  dashboard_local_go_mod:
+  dashboard_local_go_build:
+  dashboard_local_node_modules:

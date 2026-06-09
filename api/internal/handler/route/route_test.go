@@ -473,6 +473,7 @@ func TestRoute_List(t *testing.T) {
 			BaseInfo: entity.BaseInfo{CreateTime: 1609742635},
 			Name:     "r2",
 			URI:      "/test_r2",
+			Hosts:    []string{"api.example.com", "admin.example.com"},
 			Labels: map[string]string{
 				"version": "v1",
 				"build":   "16",
@@ -551,6 +552,28 @@ func TestRoute_List(t *testing.T) {
 			caseDesc: "list routes with uri",
 			giveInput: &ListInput{
 				URI: "test_r2",
+				Pagination: store.Pagination{
+					PageSize:   10,
+					PageNumber: 10,
+				},
+			},
+			mockInput: store.ListInput{
+				PageSize:   10,
+				PageNumber: 10,
+			},
+			wantRet: &store.ListOutput{
+				Rows: []interface{}{
+					mockData[1],
+				},
+				TotalSize: 1,
+			},
+			scriptRet: &entity.Script{ID: "r1", Script: "script"},
+			called:    true,
+		},
+		{
+			caseDesc: "list routes with hosts",
+			giveInput: &ListInput{
+				Hosts: "api.example.com",
 				Pagination: store.Pagination{
 					PageSize:   10,
 					PageNumber: 10,

@@ -84,7 +84,7 @@ const Page: React.FC = () => {
   const [rawData, setRawData] = useState<Record<string, any>>({});
   const [id, setId] = useState('');
   const [editorMode, setEditorMode] = useState<'create' | 'update'>('create');
-  const { paginationConfig, savePageList, checkPageList } = usePagination();
+  const { paginationConfig, savePageList, checkPageList } = usePagination(100);
   const [debugDrawVisible, setDebugDrawVisible] = useState(false);
   const [routeId, setRouteId] = useState<string>('');
 
@@ -327,7 +327,7 @@ const Page: React.FC = () => {
     },
     {
       title: formatMessage({ id: 'page.route.host' }),
-      dataIndex: 'host',
+      dataIndex: 'hosts',
       width: 224,
       render: (_, record) => {
         const list = record.hosts || (record.host && [record.host]) || [];

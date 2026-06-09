@@ -21,15 +21,15 @@ import type { MutableRefObject } from 'react';
 import { useEffect, useState } from 'react';
 import { history, useLocation } from 'umi';
 
-export default function usePagination() {
+export default function usePagination(defaultPageSize = 10) {
   const location = useLocation();
-  const [paginationConfig, setPaginationConfig] = useState({ pageSize: 10, current: 1 });
+  const [paginationConfig, setPaginationConfig] = useState({ pageSize: defaultPageSize, current: 1 });
   useEffect(() => {
-    const { page = 1, pageSize = 10 } = querystring.parse(location.search);
+    const { page = 1, pageSize = defaultPageSize } = querystring.parse(location.search);
     setPaginationConfig({ pageSize: Number(pageSize), current: Number(page) });
-  }, [location.search]);
+  }, [defaultPageSize, location.search]);
 
-  const savePageList = (page = 1, pageSize = 10) => {
+  const savePageList = (page = 1, pageSize = defaultPageSize) => {
     history.replace(`${location.pathname}?page=${page}&pageSize=${pageSize}`);
   };
 

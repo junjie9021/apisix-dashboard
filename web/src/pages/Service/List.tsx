@@ -36,7 +36,7 @@ const Page: React.FC = () => {
   const [rawData, setRawData] = useState<Record<string, any>>({});
   const [id, setId] = useState('');
   const [editorMode, setEditorMode] = useState<'create' | 'update'>('create');
-  const { paginationConfig, savePageList, checkPageList } = usePagination();
+  const { paginationConfig, savePageList, checkPageList } = usePagination(100);
 
   const [deleteLoading, setDeleteLoading] = useState('');
 

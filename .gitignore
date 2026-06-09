@@ -44,6 +44,7 @@ grpc-server-example/
 api/test/docker/*tar.gz*
 
 output
+html
 apisix_logs
 default.etcd
 api/build-tools/apisix
