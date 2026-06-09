@@ -1,0 +1,17 @@
+apisix:
+  node_listen: 9080
+
+deployment:
+  role: traditional
+  role_traditional:
+    config_provider: etcd
+  admin:
+    allow_admin:
+      - 0.0.0.0/0
+    admin_key:
+      - name: admin
+        key: demo-apisix-token
+        role: admin
+  etcd:
+    host:
+      - http://etcd:2379
