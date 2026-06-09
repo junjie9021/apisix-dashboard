@@ -195,7 +195,6 @@ type ListInput struct {
 	Label  string `auto_read:"label,query"`
 	Status string `auto_read:"status,query"`
 	Host   string `auto_read:"host,query"`
-	Hosts  string `auto_read:"hosts,query"`
 	ID     string `auto_read:"id,query"`
 	Desc   string `auto_read:"desc,query"`
 	store.Pagination
@@ -208,18 +207,6 @@ func uriContains(obj *entity.Route, uri string) bool {
 	for _, str := range obj.Uris {
 		result := strings.Contains(str, uri)
 		if result {
-			return true
-		}
-	}
-	return false
-}
-
-func hostContains(obj *entity.Route, host string) bool {
-	if strings.Contains(obj.Host, host) {
-		return true
-	}
-	for _, str := range obj.Hosts {
-		if strings.Contains(str, host) {
 			return true
 		}
 	}
@@ -252,12 +239,20 @@ func (h *Handler) List(c droplet.Context) (interface{}, error) {
 				return false
 			}
 
-			if input.Host != "" && !hostContains(obj.(*entity.Route), input.Host) {
-				return false
-			}
-
-			if input.Hosts != "" && !hostContains(obj.(*entity.Route), input.Hosts) {
-				return false
+			if input.Host != "" {
+				route := obj.(*entity.Route)
+				found := strings.Contains(route.Host, input.Host)
+				if !found {
+					for _, host := range route.Hosts {
+						if strings.Contains(host, input.Host) {
+							found = true
+							break
+						}
+					}
+				}
+				if !found {
+					return false
+				}
 			}
 
 			if input.Desc != "" && !strings.Contains(obj.(*entity.Route).Desc, input.Desc) {

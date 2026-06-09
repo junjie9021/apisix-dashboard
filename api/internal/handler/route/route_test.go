@@ -573,7 +573,7 @@ func TestRoute_List(t *testing.T) {
 		{
 			caseDesc: "list routes with hosts",
 			giveInput: &ListInput{
-				Hosts: "api.example.com",
+				Host: "api.example.com",
 				Pagination: store.Pagination{
 					PageSize:   10,
 					PageNumber: 10,

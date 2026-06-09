@@ -327,7 +327,7 @@ const Page: React.FC = () => {
     },
     {
       title: formatMessage({ id: 'page.route.host' }),
-      dataIndex: 'hosts',
+      dataIndex: 'host',
       width: 224,
       render: (_, record) => {
         const list = record.hosts || (record.host && [record.host]) || [];
