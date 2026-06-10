@@ -173,10 +173,10 @@ func (h *Handler) Broadcast(c droplet.Context) (interface{}, error) {
             }
 
             req.Header.Add("content-type", `application/json`)
-	        auth := c.Request().Header.Get("Authorization")
-	        if auth != "" {
-                    req.Header.Add("Authorization", auth)
-	        }
+            auth := c.Request().Header.Get("Authorization")
+            if auth != "" {
+                req.Header.Add("Authorization", auth)
+            }
             for k, v := range input.Headers {
                 req.Header.Add(k, v)
             }
