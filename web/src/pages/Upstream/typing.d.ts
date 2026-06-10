@@ -103,4 +103,19 @@ declare namespace UpstreamModule {
 
   // TODO: typing
   type ResponseBody = Record<string, unknown> & RequestBody;
+
+  type BroadcastRequest = {
+    id: string;
+    path: string;
+    headers: Record<string, string> | string;
+    method: 'GET' | 'POST';
+    data: string;
+  };
+
+  type BroadcastResponse = {
+    Hostname: string;
+    Host: string;
+    Result: string;
+    Ok: boolean;
+  };
 }

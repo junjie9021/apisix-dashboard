@@ -50,6 +50,12 @@ export const update = (id: string, data: UpstreamModule.RequestBody) =>
 
 export const remove = (id: string) => request(`/upstreams/${id}`, { method: 'DELETE' });
 
+export const broadcast = (data: UpstreamModule.BroadcastRequest) =>
+  request<Res<UpstreamModule.BroadcastResponse[]>>('/tool/broadcast', {
+    method: 'POST',
+    data,
+  }).then((resp) => resp.data || []);
+
 // 获取可用的上游节点列表
 export const fetchUpstreamNodes = () =>
   request<Res<{ hostname: string; ip: string }[]>>('/upstream-nodes', {

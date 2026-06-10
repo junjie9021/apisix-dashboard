@@ -28,6 +28,7 @@ import { DELETE_FIELDS } from '@/constants';
 import { timestampToLocaleString } from '@/helpers';
 import usePagination from '@/hooks/usePagination';
 
+import CurlDrawer from './components/CurlDrawer';
 import { create, fetchList, remove, update } from './service';
 
 const Page: React.FC = () => {
@@ -35,6 +36,8 @@ const Page: React.FC = () => {
   const [visible, setVisible] = useState(false);
   const [rawData, setRawData] = useState<Record<string, any>>({});
   const [id, setId] = useState('');
+  const [curlId, setCurlId] = useState('');
+  const [curlVisible, setCurlVisible] = useState(false);
   const [editorMode, setEditorMode] = useState<'create' | 'update'>('create');
   const { paginationConfig, savePageList, checkPageList } = usePagination(100);
   const { formatMessage } = useIntl();
@@ -107,6 +110,15 @@ const Page: React.FC = () => {
               {formatMessage({ id: 'page.upstream.list.delete' })}
             </Button>
           </Popconfirm>
+          <Button
+            type="primary"
+            onClick={() => {
+              setCurlId(record.id);
+              setCurlVisible(true);
+            }}
+          >
+            Curl
+          </Button>
         </Space>
       ),
     },
@@ -161,6 +173,13 @@ const Page: React.FC = () => {
             setVisible(false);
             ref.current?.reload();
           });
+        }}
+      />
+      <CurlDrawer
+        id={curlId}
+        visible={curlVisible}
+        onClose={() => {
+          setCurlVisible(false);
         }}
       />
     </PageContainer>
