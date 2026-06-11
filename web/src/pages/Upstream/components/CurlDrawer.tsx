@@ -65,23 +65,6 @@ const parseHeaders = (headers?: string) => {
   }
 };
 
-const splitRequestAuthorization = (headers: Record<string, string>) => {
-  const upstreamHeaders = { ...headers };
-  const authorizationKey = Object.keys(headers).find(
-    (key) => key.toLowerCase() === 'authorization',
-  );
-
-  if (!authorizationKey) {
-    return { requestHeaders: undefined, upstreamHeaders };
-  }
-
-  delete upstreamHeaders[authorizationKey];
-  return {
-    requestHeaders: { Authorization: headers[authorizationKey] },
-    upstreamHeaders,
-  };
-};
-
 const CurlDrawer: React.FC<Props> = ({ id, visible, onClose }) => {
   const { formatMessage } = useIntl();
   const [form] = Form.useForm<UpstreamModule.BroadcastRequest>();
@@ -116,13 +99,12 @@ const CurlDrawer: React.FC<Props> = ({ id, visible, onClose }) => {
 
       setLoading(true);
       setExpandedKeys({});
-      const { requestHeaders, upstreamHeaders } = splitRequestAuthorization(headers);
       broadcast({
         ...values,
         id,
         path: normalizePath(values.path),
-        headers: upstreamHeaders,
-      }, requestHeaders)
+        headers,
+      })
         .then((data) => {
           setResults(data || []);
         })

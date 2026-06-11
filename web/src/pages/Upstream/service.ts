@@ -50,13 +50,9 @@ export const update = (id: string, data: UpstreamModule.RequestBody) =>
 
 export const remove = (id: string) => request(`/upstreams/${id}`, { method: 'DELETE' });
 
-export const broadcast = (
-  data: UpstreamModule.BroadcastRequest,
-  headers?: Record<string, string>,
-) =>
+export const broadcast = (data: UpstreamModule.BroadcastRequest) =>
   request<Res<UpstreamModule.BroadcastResponse[]>>('/tool/broadcast', {
     method: 'POST',
-    headers,
     data,
   }).then((resp) => resp.data || []);
 

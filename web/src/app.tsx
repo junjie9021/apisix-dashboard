@@ -79,10 +79,9 @@ export const request: RequestConfig = {
       if (newOptions.data) {
         nullValueFilter(newOptions.data);
       }
-      const headers = options.headers as Record<string, string> | undefined;
       newOptions.headers = {
         ...options.headers,
-        Authorization: headers?.Authorization || localStorage.getItem('token') || '',
+        Authorization: localStorage.getItem('token') || '',
       };
       return {
         url,
